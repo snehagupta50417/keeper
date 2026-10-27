@@ -1,6 +1,6 @@
 # Verify claims console — demo guide
 
-A demo of FL-56 for banks and insurers. Everything is synthetic; no real claim, person, document or message is involved, and nothing is sent anywhere. It runs locally only: it is off when `AUTH_MODE=supabase`, in production, or when `CONSOLE_DEMO=0`.
+A demo of FL-56 for banks and insurers. Everything is synthetic; no real claim, person, document or message is involved, and nothing is sent anywhere. Locally it is on by default. On a hosted deployment (`AUTH_MODE=supabase` or production) it stays off unless `CONSOLE_DEMO=public` is set on purpose for a public demo; `CONSOLE_DEMO=0` turns it off everywhere. In a public demo each visitor gets a private desk that expires after 24 hours, at most 200 desks exist, and new sign-ins are rate limited.
 
 ## Run it
 
