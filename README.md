@@ -2,10 +2,20 @@
 
 An assistant for finding evidence of financial assets, organising a legacy record and preparing claims after a death. Keeper prepares the next step; users review consequential changes and institutions verify and decide claims.
 
-**Synthetic MVP, not a production financial service.** See [current implementation status](docs/CURRENT_STATE.md) for the dated audit and known failures. Google sign-in and public hosting are not validated by the local build.
+**Synthetic MVP, not a production financial service.** See [current implementation status](docs/CURRENT_STATE.md) for the dated audit and known failures. The live deployment runs on Google Cloud Run with Supabase; Google sign-in on it is being finalized.
+
+## Try it
+
+**Live demo (synthetic data only):** https://keeper-web-943047518295.asia-south1.run.app
+
+- **Verify claims console for banks and insurers:** open [/verify](https://keeper-web-943047518295.asia-south1.run.app/verify) and press "Sign in to demo". No login. It shows four synthetic death claims, four checks (consistency, authenticity signals, duplicate claim, completeness), a risk rating from fixed rules (never an AI model) and a decision a person makes. Walkthrough: [docs/VERIFY_DEMO.md](docs/VERIFY_DEMO.md).
+- **The family app (Keeper):** needs Google sign-in, which is being finished on the live site. It runs fully locally; see "Running it" below.
+
+Cloud Run services scale to zero, so the first visit after a quiet period can take a few seconds.
 
 ## What works today
 
+- **Verify:** a claims console for institutions with deterministic risk ratings, evidence for every flag, simulated document requests, an audit trail with CSV export, and a heir-side note that a self-submitted package can arrive pre-checked.
 - Conversation-first web app, saved text/call conversations, contextual return briefing and structured record views.
 - Supabase PostgreSQL persistence for the validated local runtime; SQLite remains available for isolated development/tests.
 - Local OCR and AI extraction, source excerpts, field review/history, evidence labels and dated amounts.
@@ -67,3 +77,7 @@ Use [HOSTED_MVP_SETUP](docs/HOSTED_MVP_SETUP.md) and [CLOUD_SETUP](docs/CLOUD_SE
 ## Documentation
 
 Read [ONE_PAGER](ONE_PAGER.md) → [PRD](PRD.md) → [LLD](LLD.md) → [DESIGN](DESIGN.md). [BRD](BRD.md) covers business hypotheses; [DECISIONS](DECISIONS.md) is historical and append-only. The [documentation index](docs/README.md) links setup, security, privacy, evaluation and workflow guides. Proposed requirements are distinct from implementation status.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE). All data in this repository is synthetic.

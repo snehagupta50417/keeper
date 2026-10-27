@@ -142,7 +142,7 @@ Each arrow that crosses into or out of our system is a trust boundary. The riski
 | Capability | Extra threats |
 | --- | --- |
 | Connectors (Gmail, SMS, tax record) | Over-collection of unrelated messages; OAuth token theft; OTP messages captured. Mitigations designed: financial-sender filter, OTPs dropped, snippets ≤ 300 characters, no raw bodies (LLD §9.2) |
-| Verify console (FL-56) | Institution staff misuse; false "fraud" flags harming genuine families. Risk computed by code with evidence; authenticity findings are signals, not proof. Demo build: synthetic claims only, no real recipients, off when AUTH_MODE=supabase or in production, server-enforced justification for High-risk approval and Low-risk escalation, audit CSV neutralises spreadsheet formulas |
+| Verify console (FL-56) | Institution staff misuse; false "fraud" flags harming genuine families. Risk computed by code with evidence; authenticity findings are signals, not proof. Demo build: synthetic claims only, no real recipients, off on hosted deployments unless CONSOLE_DEMO=public is set on purpose (then desks expire after 24 hours, are capped at 200 and sign-ins are rate limited), server-enforced justification for High-risk approval and Low-risk escalation, audit CSV neutralises spreadsheet formulas |
 | Sharing and release after death (FL-32, FL-33) | Release to the wrong person; contested release; stale contact details. Requires the release policy in D-04 |
 | Direct submission (FL-35) | Submitting on stale authority; duplicate submissions; misdirected payments |
 

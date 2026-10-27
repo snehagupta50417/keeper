@@ -16,8 +16,15 @@ import {
  * fixed rules (shared/verify-rules.ts); a person makes every decision, and the audit trail records all of it.
  */
 
-/** Never on where real sign-in is required (hosted), and switchable off locally with CONSOLE_DEMO=0. */
-export const consoleEnabled = () => !authRequired() && process.env.CONSOLE_DEMO !== "0";
+/**
+ * On by default locally. Where real sign-in is required (hosted) it stays off unless CONSOLE_DEMO=public is set on
+ * purpose, to run a public demo of synthetic data only. CONSOLE_DEMO=0 turns it off everywhere.
+ */
+export const consoleEnabled = () => process.env.CONSOLE_DEMO !== "0" && (process.env.CONSOLE_DEMO === "public" || !authRequired());
+
+/** A public demo must not grow without bound: desks expire after a day and the number of desks is capped. */
+const DESK_TTL_MS = 24 * 3_600_000;
+const MAX_DESKS = 200;
 
 export class ConsoleError extends Error {
   constructor(readonly status: number, readonly code: string, message: string) { super(message); }
@@ -31,6 +38,10 @@ const isOpen = (s: string) => s === "awaiting_review" || s === "documents_reques
 
 export async function signIn(id: string, institution: InstitutionKey) {
   const info = INSTITUTIONS[institution];
+  await db.verifyConsole.deleteMany({ where: { createdAt: { lt: new Date(Date.now() - DESK_TTL_MS) } } });
+  if (!(await db.verifyConsole.findUnique({ where: { id } })) && (await db.verifyConsole.count()) >= MAX_DESKS) {
+    throw new ConsoleError(503, "demo_busy", "The demo is busy right now. Please try again in a few minutes.");
+  }
   const console = await db.verifyConsole.upsert({ where: { id }, update: { institution, reviewer: info.reviewer }, create: { id, institution, reviewer: info.reviewer } });
   if (!(await db.verifyClaim.count({ where: { consoleId: id } }))) await seed(id);
   return console;

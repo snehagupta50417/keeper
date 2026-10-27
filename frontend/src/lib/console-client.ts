@@ -24,6 +24,8 @@ async function call<T>(url: string, init: RequestInit = {}): Promise<T> {
   const id = getConsole()?.consoleId;
   const res = await fetch(url, { ...init, headers: { ...(init.headers ?? {}), ...(id ? { "x-console-id": id } : {}), ...(init.body ? { "Content-Type": "application/json" } : {}) } });
   const data = await res.json().catch(() => ({}));
+  // A desk that expired (or never existed) means signing in again, so drop the stale id and the shell sends the user back.
+  if (res.status === 401 && id) clearConsole();
   if (!res.ok) throw new ConsoleApiError((data as { error?: string }).error || `Request failed (${res.status})`, res.status, (data as { code?: string }).code);
   return data as T;
 }

@@ -102,6 +102,11 @@ it("is off in hosted mode and when switched off", async () => {
     expect((await session.POST(new Request("http://localhost", { method: "POST", body: "{}" }))).status).toBe(404);
     delete process.env.CONSOLE_DEMO; process.env.AUTH_MODE = "supabase";
     expect((await session.POST(new Request("http://localhost", { method: "POST", body: "{}" }))).status).toBe(404);
+    // Hosted stays off unless a public demo is chosen on purpose, and "0" still wins over it.
+    process.env.CONSOLE_DEMO = "public";
+    expect((await session.POST(new Request("http://localhost", { method: "POST", body: "{}" }))).status).toBe(200);
+    process.env.CONSOLE_DEMO = "0";
+    expect((await session.POST(new Request("http://localhost", { method: "POST", body: "{}" }))).status).toBe(404);
   } finally {
     if (prev.mode === undefined) delete process.env.AUTH_MODE; else process.env.AUTH_MODE = prev.mode;
     if (prev.off === undefined) delete process.env.CONSOLE_DEMO; else process.env.CONSOLE_DEMO = prev.off;
@@ -111,4 +116,18 @@ it("is off in hosted mode and when switched off", async () => {
 it("neutralises spreadsheet formulas in the CSV export", () => {
   const csv = auditCsv([{ id: "1", claimCode: "VER-1", kind: "approved", actor: "R", note: '=HYPERLINK("x")', createdAt: "2026-10-18T00:00:00.000Z" }]);
   expect(csv).toContain(`"'=HYPERLINK(""x"")"`);
+});
+
+it("expires old desks and caps how many exist", async () => {
+  const old = newId(); await signIn(old, "lic");
+  await db.verifyConsole.update({ where: { id: old }, data: { createdAt: new Date(Date.now() - 25 * 3_600_000) } });
+  const fresh = newId(); await signIn(fresh, "lic");
+  expect(await db.verifyConsole.findUnique({ where: { id: old } })).toBeNull();
+
+  const fillers = Array.from({ length: 220 }, (_, i) => ({ id: `filler-desk-${i}-${crypto.randomUUID()}`, institution: "lic", reviewer: "x" }));
+  await db.verifyConsole.createMany({ data: fillers });
+  try {
+    expect(await status(signIn(newId(), "lic"))).toBe(503);
+    expect(await status(signIn(fresh, "lic"))).toBe(200); // an existing desk can always come back
+  } finally { await db.verifyConsole.deleteMany({ where: { id: { in: fillers.map((f) => f.id) } } }); }
 });
