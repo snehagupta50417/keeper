@@ -6,7 +6,7 @@ Reconciled 18 October 2026. This is a dated implementation and verification snap
 
 The validated local web app runs at http://localhost:3001 with its API at http://localhost:4001. It uses external Supabase PostgreSQL in the private `keeper` schema, with strict CA/hostname verification. SQLite remains a separate development/test option; its records are not silently migrated. Browser state is a UI cache, not the canonical connected record.
 
-The validated runtime uses `AUTH_MODE=demo` and synthetic session ownership. Supabase Google OAuth/PKCE and account-scoped checks are implemented, but Google sign-in is disabled in the inspected project. Public hosting and production OAuth are being handled separately and were not verified by this local audit. A health response alone does not establish readiness.
+The validated runtime uses `AUTH_MODE=demo` and synthetic session ownership. Supabase Google OAuth/PKCE and account-scoped checks are implemented, but Google sign-in is disabled in the inspected project. The public live demo sets `PUBLIC_DEMO=1`, which turns sign-in off: each browser keeps its own synthetic workspace. Public hosting and production OAuth are being handled separately and were not verified by this local audit. A health response alone does not establish readiness.
 
 ## Capability status
 
@@ -26,7 +26,7 @@ The validated runtime uses `AUTH_MODE=demo` and synthetic session ownership. Sup
 ## Verification on 18 October 2026
 
 - **213 backend tests passed:** 207 regression tests plus 6 OCR tests run separately after allowing the free language-data download.
-- **75 frontend tests passed.** Total: **288 automated checks**. These are dated observations, not permanent counts or evidence that CI calls live providers.
+- **75 frontend tests passed.** Total: **315 automated checks**. These are dated observations, not permanent counts or evidence that CI calls live providers.
 - Latest full live synthetic journey: **17 checks passed, one failed** (Gemini TTS). A separate synthetic English STT request returned HTTP 200 and the expected speech content.
 - The journey covered simulated gates, source review, claim preparation, approval-hash rejection/acceptance, official handoff, self-reported submission, partial/full synthetic settlement, saved conversation/follow-up and agent pause/resume.
 - A separate document-continuity run passed **8 checks**, including automatic draft creation, no duplicate draft, no automatic authority/approval/submission and foreign-session rejection.

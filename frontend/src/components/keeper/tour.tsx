@@ -167,13 +167,13 @@ export default function Tour() {
     stopSpeaking();
     const who = persona ?? personaById(story?.persona);
     if (to === "workspace") { dispatch({ t: "signIn", name: who.name, mode: "sample", persona: who.id }); router.push("/app"); }
-    else router.push("/signin");
+    else router.push("/app");
   };
 
   return (
     <div className="flex min-h-dvh flex-col bg-ivory">
       <header className="flex items-center justify-between gap-3 px-5 py-4 sm:px-8">
-        <Wordmark href="/signin" />
+        <Wordmark href="/" />
         <div className="flex items-center gap-2">
           <span className="rounded-full border border-line bg-paper px-3 py-1 text-[0.8rem] font-medium">Example · fictional people</span>
           <button onClick={() => exit("workspace")} className="min-h-11 rounded-full px-3 text-[0.9rem] text-muted-foreground hover:bg-secondary">Skip</button>
@@ -196,7 +196,7 @@ export default function Tour() {
               </li>
             ))}
           </ul>
-          <p className="text-[0.88rem] text-muted-foreground">Prefer to look around yourself? <button className="underline underline-offset-4" onClick={() => exit("workspace")}>Open {PERSONAS[0].name}’s workspace</button>. <Link href="/signin" className="ml-1 underline underline-offset-4">Back</Link></p>
+          <p className="text-[0.88rem] text-muted-foreground">Prefer to look around yourself? <button className="underline underline-offset-4" onClick={() => exit("workspace")}>Open {PERSONAS[0].name}’s workspace</button>. <Link href="/" className="ml-1 underline underline-offset-4">Back</Link></p>
         </main>
       ) : (
         <main className="flex flex-1 flex-col"><Stage key={story.persona} story={story} onPick={() => setStory(null)} onExit={(to) => exit(to)} /></main>

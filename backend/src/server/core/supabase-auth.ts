@@ -1,6 +1,7 @@
 import { randomBytes, createHash, timingSafeEqual } from "node:crypto";
 
-export const authRequired = () => process.env.AUTH_MODE === "supabase" || process.env.NODE_ENV === "production";
+/** PUBLIC_DEMO=1 opens a hosted deployment to anyone: no sign-in, each browser keeps its own synthetic workspace. */
+export const authRequired = () => process.env.PUBLIC_DEMO !== "1" && (process.env.AUTH_MODE === "supabase" || process.env.NODE_ENV === "production");
 export function authConfig() {
   const url = process.env.SUPABASE_URL?.replace(/\/$/, "");
   const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY;

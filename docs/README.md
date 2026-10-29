@@ -6,7 +6,7 @@ Reconciled 18 October 2026. Start with [CURRENT_STATE](CURRENT_STATE.md) for imp
 
 | Document | Purpose |
 | --- | --- |
-| [CURRENT_STATE](CURRENT_STATE.md) | Runtime, capability matrix, 288 automated checks, live audit and remaining boundaries |
+| [CURRENT_STATE](CURRENT_STATE.md) | Runtime, capability matrix, 315 automated checks, live audit and remaining boundaries |
 | [LOCAL_SUPABASE_VALIDATION](LOCAL_SUPABASE_VALIDATION.md) | Local PostgreSQL setup, Windows commands, TLS and persistence |
 | [HOSTED_MVP_SETUP](HOSTED_MVP_SETUP.md) | Supabase/Auth configuration, source packaging and hosted acceptance |
 | [CLOUD_SETUP](CLOUD_SETUP.md) | Deployment handoff and configuration boundaries |

@@ -1,12 +1,7 @@
-import { Suspense } from "react";
-import SignIn from "@/components/keeper/signin";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "Sign in — keeper" };
-
-export default function SignInPage() {
-  return (
-    <Suspense>
-      <SignIn />
-    </Suspense>
-  );
+/** There is no sign-in: old links and bookmarks go straight into the app. */
+export default async function SignInPage({ searchParams }: { searchParams: Promise<{ journey?: string }> }) {
+  const { journey } = await searchParams;
+  redirect(journey && /^[a-z]+$/.test(journey) ? `/app?journey=${journey}` : "/app");
 }

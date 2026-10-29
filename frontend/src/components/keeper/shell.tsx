@@ -25,7 +25,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const router = useRouter();
 
-  useEffect(() => { if (loaded && !state) router.replace("/signin"); }, [loaded, state, router]);
+  // No sign-in: a first visit starts a workspace in this browser straight away.
+  useEffect(() => { if (loaded && !state) dispatch({ t: "signIn", name: "You", mode: "signin" }); }, [loaded, state]);
 
   useEffect(() => {
     if (!loaded || !state) return;
