@@ -483,3 +483,7 @@ Built the FL-56 demo as a separate console (`/verify`, `/api/console/*`) with it
 ### Verify public demo — 27 October 2026
 
 The Verify console was local only. To let hackathon judges see the institution side on the hosted link, hosted deployments can now run it when `CONSOLE_DEMO=public` is set explicitly; the default for hosted stays off and `CONSOLE_DEMO=0` always wins. It holds synthetic data only and no real account is involved. Each visitor gets a private desk (still keyed by an unguessable `x-console-id`); desks expire after 24 hours, at most 200 exist (a returning desk can always come back, a new one gets "demo busy"), and sign-ins are limited to 12 a minute per caller. The rule that Verify never touches an heir's private case is unchanged. Added the MIT licence.
+
+## 2026-10-29: Public demo has no sign-in
+
+The hosted demo is for people to explore, and Google sign-in could not be finished in time and gets in the way of judges and reviewers. `PUBLIC_DEMO=1` turns hosted authentication off: `authRequired()` is false, sessions use the browser's `x-session-id` like local mode, and the Verify console opens with it. Everything is synthetic. Supabase sign-in code stays and is the default whenever the flag is unset. Trade-off: anyone can spend the free AI quota, so provider fallbacks and per-caller limits remain the guard.

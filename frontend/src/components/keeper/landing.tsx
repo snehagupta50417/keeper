@@ -19,13 +19,11 @@ function Header() {
           {NAV.map(([l, h]) => <a key={h} href={h} className="rounded px-1 py-2 text-ink/80 hover:text-ink hover:underline decoration-apricot decoration-2 underline-offset-8">{l}</a>)}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/signin" className="hidden min-h-11 items-center rounded-full px-4 text-[0.95rem] font-medium hover:bg-secondary sm:inline-flex">Sign in</Link>
-          <Link href="/signin" className="inline-flex min-h-11 items-center rounded-full bg-apricot px-5 text-[0.95rem] font-semibold text-ink hover:bg-[#dd9566]">Get started</Link>
+          <Link href="/app" className="inline-flex min-h-11 items-center rounded-full bg-apricot px-5 text-[0.95rem] font-semibold text-ink hover:bg-[#dd9566]">Get started</Link>
           <details className="relative lg:hidden">
             <summary className="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-paper text-[0.9rem] font-medium" aria-label="Menu">Menu</summary>
             <div className="absolute right-0 mt-2 w-60 rounded-2xl border border-line bg-paper p-2 shadow-lg">
               {NAV.map(([l, h]) => <a key={h} href={h} className="block rounded-xl px-4 py-3 hover:bg-secondary">{l}</a>)}
-              <Link href="/signin" className="block rounded-xl px-4 py-3 font-medium hover:bg-secondary">Sign in</Link>
             </div>
           </details>
         </div>
@@ -87,8 +85,8 @@ function Hero() {
             Accounts, investments, policies. A lifetime of details, brought together through one conversation. Find forgotten assets, prepare for family, or take the next step on a claim.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/signin" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-apricot px-7 font-semibold text-ink hover:bg-[#dd9566]">Start your conversation <ArrowRight className="h-4 w-4" aria-hidden /></Link>
-            <a href="#stories" className="inline-flex min-h-12 items-center rounded-full border border-ink/25 bg-paper px-7 font-semibold hover:bg-secondary">See Keeper in action</a>
+            <Link href="/app" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-apricot px-7 font-semibold text-ink hover:bg-[#dd9566]">Start your conversation <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href="/welcome" className="inline-flex min-h-12 items-center rounded-full border border-ink/25 bg-paper px-7 font-semibold hover:bg-secondary">Explore an example</Link>
           </div>
           <p className="landing-hero-note"><ShieldCheck aria-hidden />You review the evidence. You stay in control.</p>
           <ul className="landing-journey-links mt-7 grid gap-3 text-[0.92rem] sm:grid-cols-3" aria-label="Three things Keeper helps with">
@@ -349,7 +347,7 @@ function FinalCta() {
       <div className="mx-auto max-w-[1180px] px-5 py-20 text-center">
         <h2 className="display text-[clamp(2.2rem,5vw,3.6rem)]">A clearer starting point for your family.</h2>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {links.map(([l, j], n) => <Link key={j} href={`/signin?journey=${j}`} className={cn("inline-flex min-h-12 items-center rounded-full px-7 font-semibold", n === 0 ? "bg-apricot text-ink hover:bg-[#dd9566]" : "border border-white/50 hover:bg-white/10")}>{l}</Link>)}
+          {links.map(([l, j], n) => <Link key={j} href={`/app?journey=${j}`} className={cn("inline-flex min-h-12 items-center rounded-full px-7 font-semibold", n === 0 ? "bg-apricot text-ink hover:bg-[#dd9566]" : "border border-white/50 hover:bg-white/10")}>{l}</Link>)}
         </div>
         <p className="mt-5 text-[0.9rem] text-white/80">Start with what you know. Add details as you go.</p>
       </div>

@@ -1,17 +1,40 @@
+<p align="center"><img src="assets/financial-legacy-banner.svg" alt="Keeper: find what's yours, make sure nothing gets left behind" width="100%"></p>
+
 # Keeper — Financial Legacy
 
-An assistant for finding evidence of financial assets, organising a legacy record and preparing claims after a death. Keeper prepares the next step; users review consequential changes and institutions verify and decide claims.
+[![CI](https://github.com/snehagupta50417/keeper/actions/workflows/ci.yml/badge.svg)](https://github.com/snehagupta50417/keeper/actions/workflows/ci.yml)
+![Tests](https://img.shields.io/badge/tests-315%20passing-2e7d5b)
+![Stack](https://img.shields.io/badge/Next.js%20%C2%B7%20Hono%20%C2%B7%20Prisma%20%C2%B7%20PostgreSQL-102e32)
+![Licence](https://img.shields.io/badge/licence-MIT-d6c39a)
 
-**Synthetic MVP, not a production financial service.** See [current implementation status](docs/CURRENT_STATE.md) for the dated audit and known failures. The live deployment runs on Google Cloud Run with Supabase; Google sign-in on it is being finalized.
+After a death, families often cannot find what the person owned, or what each institution needs before it will release it. Keeper has two sides: a **family app** that finds evidence of assets and prepares claims, and a **Verify console** that helps banks and insurers check those claims and decide them. Keeper prepares the next step; people review consequential changes and institutions verify and decide claims.
+
+**Synthetic MVP, not a production financial service.** See [current implementation status](docs/CURRENT_STATE.md) for the dated audit and known failures.
 
 ## Try it
 
-**Live demo (synthetic data only):** https://keeper-web-943047518295.asia-south1.run.app
+**Live demo (synthetic data only, no sign-in):** https://keeper-web-943047518295.asia-south1.run.app
 
-- **Verify claims console for banks and insurers:** open [/verify](https://keeper-web-943047518295.asia-south1.run.app/verify) and press "Sign in to demo". No login. It shows four synthetic death claims, four checks (consistency, authenticity signals, duplicate claim, completeness), a risk rating from fixed rules (never an AI model) and a decision a person makes. Walkthrough: [docs/VERIFY_DEMO.md](docs/VERIFY_DEMO.md).
-- **The family app (Keeper):** needs Google sign-in, which is being finished on the live site. It runs fully locally; see "Running it" below.
+| | What you get | Open |
+| --- | --- | --- |
+| **Family app** | Talk to Keeper, review evidence, build a claim package. Press "Explore an example" for a guided walk-through of a fictional family, or "Get started" for your own empty workspace. | [Open the app](https://keeper-web-943047518295.asia-south1.run.app/app) |
+| **Verify console** | A bank or insurer desk with four synthetic death claims, four checks (consistency, authenticity signals, duplicate claim, completeness), a risk rating from fixed rules (never an AI model) and a decision a person makes. | [Open /verify](https://keeper-web-943047518295.asia-south1.run.app/verify) · [walkthrough](docs/VERIFY_DEMO.md) |
 
-Cloud Run services scale to zero, so the first visit after a quiet period can take a few seconds.
+There is no login. Each browser gets its own private workspace. Cloud Run services scale to zero, so the first visit after a quiet period can take a few seconds.
+
+## How it fits together
+
+```mermaid
+flowchart LR
+  F[Family app<br/>Next.js] -->|/api/*| A[API<br/>Hono + Prisma]
+  V[Verify console<br/>Next.js] -->|/api/console/*| A
+  A --> D[(PostgreSQL<br/>Supabase)]
+  A --> M[Gemini and Sarvam<br/>voice and extraction]
+  S[shared/<br/>types and deterministic rules] -.-> F
+  S -.-> A
+```
+
+Code decides access, risk and entitlement; models only extract and phrase, and their output is validated. Hosted on Google Cloud Run (free tier) with Supabase PostgreSQL.
 
 ## What works today
 
@@ -72,7 +95,7 @@ Tests use disposable SQLite data and fixtures, not the Supabase application data
 
 ## Hosting and authentication
 
-Use [HOSTED_MVP_SETUP](docs/HOSTED_MVP_SETUP.md) and [CLOUD_SETUP](docs/CLOUD_SETUP.md). Production requires external PostgreSQL, configured Supabase authentication and an HTTPS web origin. Google account sign-in is separate from financial authority. Deploy source packages made by `scripts/prepare-cloud.mjs` so each service includes `shared/`. Never deploy container-local SQLite as persistent storage.
+The live demo runs with `PUBLIC_DEMO=1`: no sign-in, one synthetic workspace per browser. Without it, hosted mode requires Supabase Google sign-in. Use [HOSTED_MVP_SETUP](docs/HOSTED_MVP_SETUP.md) and [CLOUD_SETUP](docs/CLOUD_SETUP.md). Production requires external PostgreSQL, configured Supabase authentication and an HTTPS web origin. Google account sign-in is separate from financial authority. Deploy source packages made by `scripts/prepare-cloud.mjs` so each service includes `shared/`. Never deploy container-local SQLite as persistent storage.
 
 ## Documentation
 
