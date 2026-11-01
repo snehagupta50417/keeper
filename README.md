@@ -47,7 +47,7 @@ Code decides access, risk and entitlement; models only extract and phrase, and t
 - Versioned claim packages, content-hash approval, PDF, official handoff, recorded self-submission and outcome tracking.
 - Consent controls, application-data deletion, family notes and in-app follow-up preferences.
 
-Voice input is integrated with Sarvam, Gemini and browser fallbacks. **Latest server voice-output check failed because Gemini TTS quota was exhausted.** Browser speech remains the fallback and actual user microphone reliability requires device acceptance. See [voice status](docs/VOICE.md). Support for every language is not claimed.
+Voice input is integrated with Sarvam, Gemini and browser fallbacks. Live check on 1 November 2026: server speech-to-text and Gemini spoken replies both worked (English round trip exact, Hindi reply generated). Browser speech remains the fallback, and real microphone reliability on a phone still needs device acceptance. See [voice status](docs/VOICE.md). Support for every language is not claimed.
 
 The four evidence statuses are `self_declared`, `potential_match`, `document_backed`, and `institution_verified`. A document or model confidence never establishes entitlement or real institutional verification. Financial identity/authority providers remain simulated. No real claim submission, funds movement, trusted-contact sharing or exhaustive discovery is offered.
 

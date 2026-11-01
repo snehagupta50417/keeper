@@ -16,8 +16,9 @@ Output uses browser speech and Gemini `gemini-2.5-flash-preview-tts` according t
 | --- | --- |
 | AI conversational reply | HTTP 200 |
 | Synthetic English audio to app STT | HTTP 200, expected speech content detected |
-| Gemini TTS through app | HTTP 503 |
-| Direct diagnostic of configured Gemini TTS | HTTP 429 `RESOURCE_EXHAUSTED` |
+| Gemini TTS through app | HTTP 503 on 18 Oct (quota); HTTP 200 on 1 Nov 2026 for English and Hindi |
+| Direct diagnostic of configured Gemini TTS | HTTP 429 `RESOURCE_EXHAUSTED` on 18 Oct; quota recovered by 1 Nov |
+| Live Cloud Run, 1 Nov 2026: spoken English reply fed back to app STT | HTTP 200, transcript matched exactly |
 | Sarvam TTS synthetic fixture generation | HTTP 200; diagnostic only, **not connected to Keeper replies** |
 | Browser/OS microphone and audible playback | Not physically accepted in this audit |
 
