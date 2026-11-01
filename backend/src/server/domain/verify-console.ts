@@ -48,7 +48,8 @@ export async function signIn(id: string, institution: InstitutionKey) {
 }
 
 export async function seed(consoleId: string, now = new Date()) {
-  for (const f of FIXTURES) {
+  // The database is remote when hosted, so the claims go in together and the "received" entries in one batch.
+  const created = await Promise.all(FIXTURES.map(async (f) => {
     const receivedAt = new Date(now.getTime() - f.receivedDaysAgo * DAY - 3 * 3_600_000);
     const claim = await db.verifyClaim.create({
       data: {
@@ -58,8 +59,9 @@ export async function seed(consoleId: string, now = new Date()) {
         documents: { create: f.docs.map((d) => ({ kind: d.kind, title: d.title, issuer: d.issuer, fields: JSON.stringify(d.fields), signals: JSON.stringify(d.signals ?? []), readable: d.readable ?? true })) },
       },
     });
-    await db.verifyEvent.create({ data: { consoleId, claimId: claim.id, kind: "received", actor: "system", note: f.receipt, createdAt: receivedAt } });
-  }
+    return { consoleId, claimId: claim.id, kind: "received", actor: "system", note: f.receipt, createdAt: receivedAt };
+  }));
+  await db.verifyEvent.createMany({ data: created });
 }
 
 /** Start the demo over: every claim, check run and audit entry is replaced by a fresh copy. */
