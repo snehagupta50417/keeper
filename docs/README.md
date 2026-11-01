@@ -11,6 +11,7 @@ Reconciled 18 October 2026. Start with [CURRENT_STATE](CURRENT_STATE.md) for imp
 | [HOSTED_MVP_SETUP](HOSTED_MVP_SETUP.md) | Supabase/Auth configuration, source packaging and hosted acceptance |
 | [CLOUD_SETUP](CLOUD_SETUP.md) | Deployment handoff and configuration boundaries |
 | [FREE_TIER_PLAN](FREE_TIER_PLAN.md) | Selected services, finite credits, quotas and unverified billing controls |
+| [DEMO_SCRIPT](DEMO_SCRIPT.md) | Two-minute presenter walk-through of both sides, with likely questions |
 | [VOICE](VOICE.md) | Input/output fallbacks, current TTS quota failure and device acceptance |
 | [CASE_AGENT](CASE_AGENT.md) | Request-driven checkpoints, pause/resume/recheck and human boundaries |
 | [EVIDENCE_WORKFLOWS](EVIDENCE_WORKFLOWS.md) | Evidence graph, saved claim review and document-to-claim continuation |

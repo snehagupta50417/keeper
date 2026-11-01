@@ -20,7 +20,7 @@ After a death, families often cannot find what the person owned, or what each in
 | **Family app** | Talk to Keeper, review evidence, build a claim package. Press "Explore an example" for a guided walk-through of a fictional family, or "Get started" for your own empty workspace. | [Open the app](https://keeper-web-943047518295.asia-south1.run.app/app) |
 | **Verify console** | A bank or insurer desk with four synthetic death claims, four checks (consistency, authenticity signals, duplicate claim, completeness), a risk rating from fixed rules (never an AI model) and a decision a person makes. | [Open /verify](https://keeper-web-943047518295.asia-south1.run.app/verify) · [walkthrough](docs/VERIFY_DEMO.md) |
 
-There is no login. Each browser gets its own private workspace. Cloud Run services scale to zero, so the first visit after a quiet period can take a few seconds.
+There is no login. Each browser gets its own private workspace. Presenting it? See [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md). Cloud Run services scale to zero, so the first visit after a quiet period can take a few seconds.
 
 ## How it fits together
 
